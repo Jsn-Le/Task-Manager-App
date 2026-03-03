@@ -42,4 +42,20 @@ public class Task {
 
     }
 
+    @Override
+    public String toString() {
+
+        String status;
+
+        if (completed) {
+            status = "[x]";
+            
+        } else {
+            status = "[]";
+        }
+
+        return status + " " + id + " - " + title;
+
+    }
+
 }
