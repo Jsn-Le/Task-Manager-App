@@ -26,19 +26,6 @@ public class TaskManager {
         return null;
     }
 
-    public Task getTaskById(int id) {
-        return findTaskById(id);
-    }
-
-    public Task updateTaskById(int id, String title) {
-        Task t = findTaskById(id);
-        if (t == null) {
-            return null;
-        }
-        t.setTitle(title);
-        return t;
-    }
-
     public Task markTaskCompleted(int id) {
         Task t = findTaskById(id);
         if (t == null) {
