@@ -42,8 +42,35 @@ public class Main {
                 }
             });
 
-            addButton.addActionListener(e -> {
+            completeButton.addActionListener(e -> {
+                int selectedRow = table.getSelectedRow();
+                
+                if (selectedRow == -1) {
+                    return;
+                }
 
+                Task task = taskManager.getTasks().get(selectedRow);
+                int id = task.getId();
+
+                taskManager.markTaskCompleted(id);
+                tableModel.fireTableDataChanged();
+            });
+
+            deleteButton.addActionListener(e -> {
+                int selectedRow = table.getSelectedRow();
+
+                if (selectedRow == -1) {
+                    return;
+                }
+
+                Task task = taskManager.getTasks().get(selectedRow);
+                int id = task.getId();
+
+                taskManager.removeTaskById(id);
+                tableModel.fireTableDataChanged();
+            });
+
+            addButton.addActionListener(e -> {
                 String title = textField.getText();
                 title = title.trim();
 
@@ -55,7 +82,6 @@ public class Main {
                 tableModel.fireTableDataChanged();
 
                 textField.setText("");
-
             });
 
             frame.setVisible(true);
