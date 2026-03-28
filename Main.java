@@ -13,9 +13,6 @@ public class Main {
             JPanel panel = new JPanel();
             frame.add(panel, BorderLayout.NORTH);
 
-            DefaultListModel<Task> model = new DefaultListModel<>();
-            JList<Task> list = new JList<>(model);
-
             JTextField textField = new JTextField(30);
             JButton addButton = new JButton("Add");
             JButton completeButton = new JButton("Complete");
@@ -24,10 +21,13 @@ public class Main {
             panel.add(addButton);
             panel.add(completeButton);
 
-            JScrollPane scrollPane = new JScrollPane(list);
-            frame.add(scrollPane, BorderLayout.CENTER);
-
             TaskManager taskManager = new TaskManager();
+            TaskTableModel tableModel = new TaskTableModel(taskManager);
+            JTable table = new JTable(tableModel);
+            
+            JScrollPane scrollPane = new JScrollPane(table);
+            frame.add(scrollPane, BorderLayout.CENTER);
+            
             addButton.addActionListener(e -> {
 
                 String title = textField.getText();
@@ -38,12 +38,7 @@ public class Main {
                 }
 
                 taskManager.addTask(title);
-                
-                model.clear();
-
-                for (Task t : taskManager.getTasks()) {
-                    model.addElement(t);
-                }
+                tableModel.fireTableDataChanged();
 
                 textField.setText("");
 
