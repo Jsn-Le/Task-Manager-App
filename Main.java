@@ -16,10 +16,14 @@ public class Main {
             JTextField textField = new JTextField(30);
             JButton addButton = new JButton("Add");
             JButton completeButton = new JButton("Complete");
+            JButton deleteButton = new JButton("Delete");
+            completeButton.setEnabled(false);
+            deleteButton.setEnabled(false);
 
             panel.add(textField);
             panel.add(addButton);
             panel.add(completeButton);
+            panel.add(deleteButton);
 
             TaskManager taskManager = new TaskManager();
             TaskTableModel tableModel = new TaskTableModel(taskManager);
@@ -28,6 +32,16 @@ public class Main {
             JScrollPane scrollPane = new JScrollPane(table);
             frame.add(scrollPane, BorderLayout.CENTER);
             
+            table.getSelectionModel().addListSelectionListener(e -> {
+                if (table.getSelectedRow() != -1) {
+                    completeButton.setEnabled(true);
+                    deleteButton.setEnabled(true);
+                } else {
+                    completeButton.setEnabled(false);
+                    deleteButton.setEnabled(false);
+                }
+            });
+
             addButton.addActionListener(e -> {
 
                 String title = textField.getText();
