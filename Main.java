@@ -17,6 +17,7 @@ public class Main {
             JButton addButton = new JButton("Add");
             JButton completeButton = new JButton("Complete");
             JButton deleteButton = new JButton("Delete");
+            JButton clearCompletedButton = new JButton("Clear Completed");
             completeButton.setEnabled(false);
             deleteButton.setEnabled(false);
 
@@ -24,6 +25,7 @@ public class Main {
             panel.add(addButton);
             panel.add(completeButton);
             panel.add(deleteButton);
+            panel.add(clearCompletedButton);
 
             TaskManager taskManager = new TaskManager();
             TaskTableModel tableModel = new TaskTableModel(taskManager);
@@ -67,6 +69,11 @@ public class Main {
                 int id = task.getId();
 
                 taskManager.removeTaskById(id);
+                tableModel.fireTableDataChanged();
+            });
+
+            clearCompletedButton.addActionListener(e -> {
+                taskManager.removeCompletedTasks();
                 tableModel.fireTableDataChanged();
             });
 
